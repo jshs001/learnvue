@@ -1,0 +1,76 @@
+前端工程化
+
+    模块化(js 的模块化、css 的模块化、资源的模块化)
+    组件化(复用现有的 UI结构、样式、行为)
+    规范化(目录结构的划分、编码规范化、接口规范化、文档规范化、Git 分支管理)
+    自动化(自动化构建、自动部署、自动化测试)
+
+    工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。
+    企业中的 Vue 项目和 React 项目，都是基于工程化的方式进行开发的。
+
+
+
+
+
+前端工程化的解决方案
+
+早期的前端工程化解决方案:
+grunt(https://www.gruntjs.net/)
+gulp(https://www.gulpjs.com.cn/)
+
+目前主流的前端工程化解决方案:
+webpack( https://www.webpackjs.com/)
+parcel(https://zh.parceljs.org/)
+
+
+
+webpack
+
+主要功能:它提供了友好的前端模块化开发支持，以及代码压缩混淆、处理浏览器端 javaScript 的兼容性、性能优化等强大的功能。
+好处：程序员把工作重心放到开发上。
+
+安装 npm install webpack webpack-cli -D    // -D 是dev节点（devDependencies）；  -S 生产节点（Dependencies）默认
+
+
+
+
+配置webpack：
+
+1 在项目的根目录新建webpack.config.js配置文件,初始化如下配置
+module.exports = {
+    mode: 'development' // mode指定构建模式 分development和production
+}
+
+2 在package.json的scripts节点里，新建dev脚本
+  "scripts": {
+    "dev": "webpack"
+  }
+
+3 终端运行npm run dev命令，启动webpack进行项目的打包构建。此时会调用package.json配置的脚本，同时读取项目根目录的webpack配置文件。
+
+webpack4.x 和 5.x版本默认打包入口文件./src/index.js;默认的输出文件路径为./dist/main.js;
+修改默认输入输出的方法 见配置文件entry、output节点。
+
+
+
+webpack插件：扩展webpack的能力，常用的如下：
+    
+    webpack-dev-server：类似nodemon 每次修改源代码会自动打包和构建 安装配置如下
+        npm install webpack-dev-server -D
+        修改package.json文件scripts的dev命令为 webpack serve
+        再次运行npm run dev后浏览器访问http://localhost:8080地址，查看自动打包效果
+    
+        运行日志：webpack output is served from / 意思是有一个隐藏的默认输出文件在根目录，是存在内存中的
+        看不到 但是可以访问http://localhost:8080/bundle.js
+    
+    
+    html-webpack-plugin：类似模板引擎，可自定制index.html页面的内容，会把src目录下的index.html复制一份到内存中，
+        同时在复制出来的html里注入一份打包的bundle.js文件
+        跟webpack-dev-server一样在http://localhost:8080打开。
+        npm install html-webpack-plugin -D
+        配置见webpack.config.js 有三步
+
+        这样html-webpack-plugin结合webpack-dev-server在http://localhost:8080的内存里有同时有了html和js
+        这样就可以随时保存代码看到效果了。
+
+    配合上面两个插件，webpack.config.js里有一个配置节点devServer，在npm run dev打包后直接打开浏览器
