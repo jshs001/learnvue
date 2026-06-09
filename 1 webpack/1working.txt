@@ -74,3 +74,57 @@ webpack插件：扩展webpack的能力，常用的如下：
         这样就可以随时保存代码看到效果了。
 
     配合上面两个插件，webpack.config.js里有一个配置节点devServer，在npm run dev打包后直接打开浏览器
+
+
+
+webpack中的loader：
+
+webpack默认只能打包处理以 js 后缀名结尾的模块。其他非 js 后缀名结尾的模块webpack默认处理不了，需要调用 loader加载器才可以正常打包，否则会报错!
+loader 加载器的作用:协助 webpack 打包处理特定的文件模块。比如:
+    css-loader 可以打包处理.css相关的文件
+    less-loader 可以打包处理.less 相关的文件
+    babel-loader 可以打包处理 webpack 无法处理的高级JS语法
+
+处理css文件：
+    npm install css-loader style-loader -D 
+    配置见webpack.config.js module-rules节点
+
+处理less文件：
+    npm i less-loader less -D
+    配置见webpack.config.js module-rules节点
+
+base64图片一个小logo 可以上传base64在线转换工具 转换为base64格式，
+    用base64的好处用户请求图片时，图片会直接从内存中读取，不会请求服务器，从而提高图片加载速度。
+    缺点：转变为base64格式后体积变大，加载速度变慢。
+    所以小图片小logo可以用base64，大图片就不要使用base64了。
+
+处理与url路径相关的文件：
+    npm install url-loader file-loader -D
+    配置见webpack.config.js module-rules节点
+
+处理高级语法：webpack默认只能处理一部分高级语法，处理不了的需要借助babel-loader处理
+    npm install babel-loader @babel/core @babel/plugin-proposal-decorators @babel/preset-env -D
+    配置见webpack.config.js module-rules节点
+    注意新版本的需要加.babelrc文件配置
+      
+    详情请参考 Babel 的官网 https://babeljs.io/docs/en/babel-plugin-proposal-decorators
+
+
+
+上线就是把最终生成的dist目录的各种文件打包给到后端，然后由后端进行部署。
+    在package.json文件中scripts节点，添加build命令。--mode选项会覆盖webpack.config.js中的mode选项
+    另外json配置文件中不要加注释
+
+打包好的文件存放在dist目录下都是乱的需要把js文件放到js目录下，css文件放到css目录下，图片文件放到img目录下，html文件放到html目录下
+    js 配置见webpack.config.js output节点
+    图片路径 见webpack.config.js module-rules节点
+
+每次重新生产环境打包项目最好手动删除dist目录
+自动清理的话 需要npm install clean-webpack-plugin -D
+
+
+
+
+
+
+
